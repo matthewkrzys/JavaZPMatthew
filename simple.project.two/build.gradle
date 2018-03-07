@@ -1,0 +1,35 @@
+import java.sql.DriverManager
+
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+task myTask {
+    if(project.hasProperty('profile') && project.profile=='dev'){
+        ant.propertyfile(file: "src/main/resources/db.properties") {
+            entry( key: "database.jdbc.driverClass", value: "org.h2.Driver")
+            entry( key: "database.jdbc.connectionURL", value: "jdbc:h2:~/test")
+            entry( key: "database.jdbc.username", value: "admin")
+            entry( key: "database.jdbc.password", value: "admin1")
+        }
+    }
+    if(project.hasProperty('profile') && project.profile=='test'){
+        ant.propertyfile(file: "src/main/resources/db.properties") {
+            entry( key: "database.jdbc.driverClass", value: "org.h2.Driver")
+            entry( key: "database.jdbc.connectionURL", value: "jdbc:h2:~/test")
+            entry( key: "database.jdbc.username", value: "test")
+            entry( key: "database.jdbc.password", value: "test1")
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
