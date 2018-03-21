@@ -7,18 +7,22 @@ import java.io.File;
 import java.io.IOException;
 
 public class JSONGenerate {
-    public void generate(JSONData jsonParse,String output) {
+    public void generate(JSONData jsonParse,String output,long numberFile) {
 
         ObjectMapper mapper = new ObjectMapper();
 
         JSONData jsonData=jsonParse;
 
         try {
-            String path="jasonData.json";
-//            if(!output.equals(""))
-//                path=output+"/jsonData.jason";
-
+            String path=output+"/jasonData"+numberFile+".json";
+            if(new File(output).exists()){
+            }
+            else
+            {
+                new File(output).mkdirs();
+            }
             mapper.writeValue(new File(path), jsonData);
+            System.out.println("Done");
         } catch (JsonGenerationException e) {
             e.printStackTrace();
         } catch (JsonMappingException e) {

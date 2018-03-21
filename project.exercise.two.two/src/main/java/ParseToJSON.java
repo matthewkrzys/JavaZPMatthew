@@ -2,9 +2,12 @@ import model.CommandData;
 import model.Element;
 import model.ElementFile;
 import model.JSONData;
+import org.omg.CORBA.INTERNAL;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -15,22 +18,24 @@ public class ParseToJSON {
     public JSONData jsonData;
 
     public void parseCommandData(CommandData commandData) {
-        jsonData=new JSONData();
+        jsonData = new JSONData();
         String[] tCustomerID = commandData.getCustomerID().split(":");
-        jsonData.customer_id = randomGenerate(Integer.parseInt(tCustomerID[1]), Integer.parseInt(tCustomerID[0]));
         String[] tDataRange = commandData.getDateRange().split(":");
-        jsonData.timestamp = tDataRange[0];
-        //przekazac do metody
-        commandData.getItemsFile();
-
         String[] tItemCount = commandData.getItemsCount().split(":");
-        int ItemCount = randomGenerate(Integer.parseInt(tItemCount[1]), Integer.parseInt(tItemCount[0]));
+        int ItemCount;
         String[] tItemQuantity = commandData.getItemsQuantity().split(":");
-        jsonData.items = getItemFile(ItemCount, Integer.parseInt(tItemQuantity[1]), Integer.parseInt(tItemQuantity[0]), commandData.getItemsFile());
-        jsonData.sum = sumPrice;
         commandData.getEventsCount();
         JSONGenerate jsonGenerate = new JSONGenerate();
-        jsonGenerate.generate(jsonData,commandData.getOutDir());
+        int count = Integer.parseInt(commandData.getEventsCount());
+        for (int i = 1; i <= count; i++) {
+            sumPrice=0;
+            jsonData.customer_id = randomGenerate(Integer.parseInt(tCustomerID[1]), Integer.parseInt(tCustomerID[0]));
+            jsonData.timestamp = generatedata(tDataRange[0]+":"+tDataRange[1]+":"+tDataRange[2],tDataRange[3]+":"+tDataRange[4]+":"+tDataRange[5]);
+            ItemCount = randomGenerate(Integer.parseInt(tItemCount[1]), Integer.parseInt(tItemCount[0]));
+            jsonData.items = getItemFile(ItemCount, Integer.parseInt(tItemQuantity[1]), Integer.parseInt(tItemQuantity[0]), commandData.getItemsFile());
+            jsonData.sum = sumPrice;
+            jsonGenerate.generate(jsonData, commandData.getOutDir(), i);
+        }
 
     }
 
@@ -44,8 +49,8 @@ public class ParseToJSON {
         List<ElementFile> elementFileList = getElementFromFile(itemsFile);
         for (int i = 0; i < itemCount; i++) {
             Element e = new Element();
-            e.name = elementFileList.get(i%elementFileList.size()).name;
-            e.price = elementFileList.get(i%elementFileList.size()).price;
+            e.name = elementFileList.get(i % elementFileList.size()).name;
+            e.price = elementFileList.get(i % elementFileList.size()).price;
             e.quantity = randomGenerate(maxValueQuantity, minValueQuantity);
             elementList.add(e);
             sumPrice += e.price * e.quantity;
@@ -72,6 +77,15 @@ public class ParseToJSON {
             elementFileList.add(e);
         }
         return elementFileList;
+    }
+    public String generatedata(String FirstDate,String SecondDate){
+        Random random=new Random();
+        LocalDateTime start = LocalDateTime.parse(FirstDate.replace("-0100",""));
+        LocalDateTime end = LocalDateTime.parse(SecondDate.replace("-0100",""));
+        long amount = start.until(end, ChronoUnit.NANOS);
+        if (amount < 0) throw new IllegalArgumentException();
+        long generatedDate = (long) (random.nextFloat() * amount);
+        return start.plusNanos(generatedDate).toString()+"-0100";
     }
 
 
