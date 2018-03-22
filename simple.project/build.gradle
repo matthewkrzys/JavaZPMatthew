@@ -1,6 +1,8 @@
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'maven-publish'
+
 
 sourceCompatibility = 1.8
 
@@ -14,11 +16,20 @@ dependencies {
     compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
 
 }
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
 jar {
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
+
 task customFatJar(type: Jar) {
     manifest {
         attributes 'Main-Class': 'simpleZP.hello'
@@ -26,7 +37,4 @@ task customFatJar(type: Jar) {
     baseName = 'all-in-one-jar'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
-}
-repositories {
-    mavenCentral()
 }
