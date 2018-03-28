@@ -25,6 +25,9 @@ public class SellingServiceTest {
     @Rule
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
+    @Mock
+    private DiscountConfigOW discountConfigOW;
+
     @Test
     public void notSell() {
         //given
@@ -34,7 +37,7 @@ public class SellingServiceTest {
         Customer c = new Customer(1, "DasCustomer", "Kraków, Łojasiewicza");
 
         //when
-        boolean sold = uut.sell(i, 7, c);
+        boolean sold = uut.sell(i, 7, c,discountConfigOW.isWeekendPromotion());
 
         //then
         Assert.assertFalse(sold);
@@ -50,7 +53,7 @@ public class SellingServiceTest {
         Customer c = new Customer(1, "DasCustomer", "Kraków, Łojasiewicza");
 
         //when
-        boolean sold = uut.sell(i, 1, c);
+        boolean sold = uut.sell(i, 1, c,discountConfigOW.isWeekendPromotion());
 
         //then
         Assert.assertFalse(sold);
@@ -67,14 +70,52 @@ public class SellingServiceTest {
         Customer c = new Customer(1, "DasCustomer", "Kraków, Łojasiewicza");
         uut.moneyService.addMoney(c, new BigDecimal(990));
 
+        Mockito.when(persistenceLayer.saveTransaction(Mockito.any(),Mockito.any(),Mockito.anyInt())).thenReturn(Boolean.TRUE);
+        Mockito.when(discountConfigOW.isWeekendPromotion()).thenReturn(false);
+
         //when
-        boolean sold = uut.sell(i, 10, c);
+        boolean sold = uut.sell(i, 10, c,discountConfigOW.isWeekendPromotion());
 
         //then
-        Assert.assertFalse(sold);
+        Assert.assertTrue(sold);
         Assert.assertEquals(BigDecimal.valueOf(970), uut.moneyService.getMoney(c));
     }
 
+    @Test
+    public void sellWithPrice6() {
+        //given
+        SellingService uut = new SellingService(persistenceLayer);
+        Mockito.when(persistenceLayer.saveCustomer(Mockito.any())).thenReturn(Boolean.TRUE);
+        Mockito.when(persistenceLayer.saveTransaction(Mockito.any(),Mockito.any(),Mockito.anyInt())).thenReturn(Boolean.TRUE);
+        Mockito.when(discountConfigOW.isWeekendPromotion()).thenReturn(true);
+        Item i = new Item("i", new BigDecimal(6));
+        Customer c = new Customer(1, "DasCustomer", "Kraków, Łojasiewicza");
+        //when
+        boolean sold = uut.sell(i, 1, c,discountConfigOW.isWeekendPromotion());
+        //then
+        Assert.assertTrue(sold);
+        Assert.assertEquals(BigDecimal.valueOf(7), uut.moneyService.getMoney(c));
+    }
+
+    @Test
+    public void DiscountConfigOWKRK(){
+        DiscountConfigOW ow = new DiscountConfigOW();
+        Customer c= new Customer(1,"Zbyszek","Kraków");
+        Item i =new Item("Obwarzanek",BigDecimal.valueOf(10));
+        BigDecimal b=ow.getDiscountForItem(i,c);
+        System.out.println(b);
+        Assert.assertEquals(BigDecimal.valueOf(1),b);
+    }
+
+    @Test
+    public void DiscountConfigOWPanArkadiusz(){
+        DiscountConfigOW ow = new DiscountConfigOW();
+        Customer c= new Customer(1,"Arkadiusz","Zakopane");
+        Item i =new Item("Obwarzanek",BigDecimal.valueOf(10));
+        BigDecimal b=ow.getDiscountForItem(i,c);
+        System.out.println(b);
+        Assert.assertEquals(BigDecimal.valueOf(5),b);
+    }
     @Test
     public void customerTest(){
         Customer c = new Customer(2,"Adam","Krzywa 7");

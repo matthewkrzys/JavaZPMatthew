@@ -16,11 +16,12 @@ public class SellingService {
         this.moneyService = new CustomerMoneyService(this.persistenceLayer);
     }
 
-    public boolean sell(Item item, int quantity, Customer customer) {
+    public boolean sell(Item item, int quantity, Customer customer, boolean isWeekProm) {
         BigDecimal money = moneyService.getMoney(customer);
         BigDecimal price = getMultiply(quantity,item,customer);
-        if (DiscountsConfig.isWeekendPromotion() && price.compareTo(BigDecimal.valueOf(5)) > 0) {
-//            price = price.subtract(BigDecimal.valueOf(3));
+            System.out.println(price.compareTo(BigDecimal.valueOf(5)));
+        if (isWeekProm && price.compareTo(BigDecimal.valueOf(5)) > 0) {
+            price = price.subtract(BigDecimal.valueOf(3));
         }
         boolean sold = moneyService.pay(customer, price);
         if (sold) {
