@@ -34,9 +34,12 @@ public class ParseToJSON {
             ItemCount = randomGenerate(Integer.parseInt(tItemCount[1]), Integer.parseInt(tItemCount[0]));
             jsonData.items = getItemFile(ItemCount, Integer.parseInt(tItemQuantity[1]), Integer.parseInt(tItemQuantity[0]), commandData.getItemsFile());
             jsonData.sum = sumPrice;
-            jsonGenerate.generate(jsonData, commandData.getOutDir(), i);
+            GenerateJSON(jsonGenerate,jsonData, commandData.getOutDir(), i);
         }
 
+    }
+    public boolean GenerateJSON(JSONGenerate jsonGenerate, JSONData jsonData, String outDir, int i){
+        return jsonGenerate.generate(jsonData, outDir, i);
     }
 
     public int randomGenerate(int max, int min) {

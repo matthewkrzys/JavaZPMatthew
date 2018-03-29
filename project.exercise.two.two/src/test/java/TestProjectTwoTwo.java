@@ -60,7 +60,7 @@ public class TestProjectTwoTwo {
         j.customer_id=12;
         j.timestamp=LocalTime.now().toString();
         j.sum=20.3;
-        Assert.assertTrue(j.id==1);
+        Assert.assertTrue(j.customer_id==12);
     }
     @Test
     public void ElementFileTest(){

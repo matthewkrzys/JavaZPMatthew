@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class JSONGenerate {
-    public void generate(JSONData jsonParse,String output,long numberFile) {
+    public boolean generate(JSONData jsonParse,String output,long numberFile) {
 
         ObjectMapper mapper = new ObjectMapper();
 
@@ -23,6 +23,7 @@ public class JSONGenerate {
             }
             mapper.writeValue(new File(path), jsonData);
             System.out.println("Done");
+            return true;
         } catch (JsonGenerationException e) {
             e.printStackTrace();
         } catch (JsonMappingException e) {
@@ -30,7 +31,7 @@ public class JSONGenerate {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+return false;
     }
 
 }

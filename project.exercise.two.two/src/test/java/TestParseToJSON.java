@@ -1,7 +1,9 @@
 import model.CommandData;
 import model.ElementFile;
+import model.JSONData;
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.time.LocalTime;
@@ -10,6 +12,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TestParseToJSON {
+    @Mock
+    ParseToJSON parseToJSON;
+
+    @Mock
+    JSONGenerate jsonGenerate;
+
     @Test
     public void randomTest() {
         ParseToJSON parseToJSON = new ParseToJSON();
@@ -18,16 +26,18 @@ public class TestParseToJSON {
     }
     @Test
     public void parseCommandDateTest(){
-        ParseToJSON parseToJSON=new ParseToJSON();
+        parseToJSON=new ParseToJSON();
         CommandData c = new CommandData();
-        c.setCustomerID("12");
+        c.setCustomerID("1:12");
         String date= "2018-03-08T00:00:00.000-0100:2018-03-08T00:00:00.000-0100";
         c.setDateRange(date);
-        c.setEventsCount("0");
-        c.setOutDir("/output");
+        c.setEventsCount("1");
+        c.setOutDir("./output");
         c.setItemsCount("3:12");
         c.setItemsQuantity("4:5");
         c.setItemsFile("items.csv");
+//        jsonGenerate=new JSONGenerate();
+//        Mockito.when(parseToJSON.GenerateJSON(jsonGenerate,new JSONData(),"./",2)).thenReturn(Boolean.TRUE);
         parseToJSON.parseCommandData(c);
         Assert.assertTrue(parseToJSON.jsonData!=null);
     }
