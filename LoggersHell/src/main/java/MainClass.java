@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 public class MainClass {
 
     public static void main(String[] args) {
-        System.setProperty("log4j.configurationFile","/home/matthew/Desktop/javaZP/JavaZPMatthew/LoggersHell/src/main/resources/log4j2.xml");
         Logger logger = LoggerFactory.getLogger(MainClass.class);
         logger.debug("Start");
         BasicConfigurator.configure();

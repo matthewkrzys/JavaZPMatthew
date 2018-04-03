@@ -19,14 +19,15 @@ dependencies {
     compile 'ch.qos.logback:logback-classic:1.2.3'
     compile group: 'com.internal', name: 'Tools', version: '1.0-SNAPSHOT'
     compile group: 'com.external', name: 'Payments', version: '1.0-SNAPSHOT'
-    compile ('javax.activation:activation:1.1.1')
-    compile ('javax.mail:mail:1.4.7')
 }
-shadowJar {
-    baseName = 'loggersHell'
-    classifier = null
-    version = null
+
+task fatJar(type: Jar) {
     manifest {
-        attributes "Main-Class": "MainClass"
+        attributes 'Implementation-Title': 'Gradle Fat-Jar File Example',
+                'Implementation-Version': version,
+                'Main-Class': 'MainClass'
     }
+    baseName = 'loggersHell'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }

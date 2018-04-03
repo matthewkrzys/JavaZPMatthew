@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="USER_HOME" value="e:/var/log/logfiles" />
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>myApp.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>archived_log%i.${bySecond}.log</fileNamePattern>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>10MB</maxFileSize>
+        </triggeringPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{yyyy:MM:dd-HH:mm:ss.SSS} [%thread] %-5level %msg%n</pattern>
+        </layout>
+    </appender>
+    <!--<appender name="FILE_TIME" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--<file>./log.log</file>-->
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">-->
+        <!--<fileNamePattern>archived_log%i.${bySecond}.log</fileNamePattern>-->
+        <!--</rollingPolicy>-->
+        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">-->
+        <!--<maxFileSize>10MB</maxFileSize>-->
+        <!--</triggeringPolicy>-->
+
+        <!--<encoder>-->
+            <!--<pattern>%d{yyyy:MM:dd-HH:mm:ss.SSS} [%thread] %-5level %msg%n</pattern>-->
+        <!--</encoder>-->
+    <!--</appender>-->
+
+    <timestamp key="bySecond" datePattern="yyyy-MM-dd HH-mm-ss" />
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                {%n  "timestamp": "%d",%n  "thread": "%thread",%n  "level": "%level",%n  "message": "%msg"%n}
+            </pattern>
+        </encoder>
+    </appender>
+
+    <logger name="LogController" level="TRACE"/>
+
+    <root level="debug">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>
