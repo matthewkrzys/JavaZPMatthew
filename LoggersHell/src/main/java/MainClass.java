@@ -1,15 +1,17 @@
+import ch.qos.logback.classic.Logger;
 import com.external.PaymentsService;
 import com.internal.DiscountCalculator;
 import org.apache.log4j.BasicConfigurator;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 import java.math.BigDecimal;
 
 public class MainClass {
+    final static Logger logger = (Logger) LoggerFactory.getLogger(MainClass.class);
+
 
     public static void main(String[] args) {
-        Logger logger = LoggerFactory.getLogger(MainClass.class);
         logger.debug("Start");
         BasicConfigurator.configure();
         DiscountCalculator discountCalculator = new DiscountCalculator();
@@ -23,9 +25,9 @@ public class MainClass {
 
         boolean paymentMade = paymentsService.makePayment(customerID, companyID, ticketPrice.subtract(discountValue));
         if (paymentMade)
-            System.out.println("Payment successfully");
+            logger.info("Payment successfully");
         else
-            System.out.println("Problem occured. Please, try again");
+            logger.info("Problem occured. Please, try again");
 
         logger.info("DONE!");
     }
