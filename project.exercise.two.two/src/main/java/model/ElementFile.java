@@ -1,7 +1,11 @@
 package model;
 
 public class ElementFile {
-    public String name;
-    public double price;
+    public final String name;
+    public final double price;
 
+    public ElementFile(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
 }

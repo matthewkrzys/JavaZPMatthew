@@ -11,13 +11,14 @@ public class TestJSONGenerator {
     @Test
     public void testWriteToFile(){
         JSONGenerate jsonGenerate=new JSONGenerate();
-        JSONData jsonData=new JSONData();
-        jsonData.sum=2.0;
-        jsonData.timestamp= LocalDate.now().toString();
-        jsonData.customer_id=1;
-        jsonData.items=new ArrayList<>();
+        JSONData jsonData=new JSONData(
+                LocalDate.now().toString(),
+                1,
+                new ArrayList<>(),
+                2.0
+        );
         jsonGenerate.generate(jsonData,"./",1);
-        boolean fileb=new File("./jasonData1.json").exists();
+        boolean fileb=new File("./jsonData1.json").exists();
         Assert.assertTrue(fileb);
     }
 
@@ -28,13 +29,15 @@ public class TestJSONGenerator {
             f.delete();
         }
         JSONGenerate jsonGenerate=new JSONGenerate();
-        JSONData jsonData=new JSONData();
-        jsonData.sum=2.0;
-        jsonData.timestamp= LocalDate.now().toString();
-        jsonData.customer_id=1;
-        jsonData.items=new ArrayList<>();
+        JSONData jsonData=new JSONData(
+                LocalDate.now().toString(),
+                1,
+                new ArrayList<>(),
+                2.0
+        );
+
         jsonGenerate.generate(jsonData,"./newfile",1);
-        boolean fileb=new File("./newfile/jasonData1.json").exists();
+        boolean fileb=new File("./newfile/jsonData1.json").exists();
         Assert.assertTrue(fileb);
     }
 }

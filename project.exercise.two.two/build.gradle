@@ -19,6 +19,7 @@ dependencies {
     compileOnly "org.projectlombok:lombok:1.16.8"
     compile group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.13'
 }
+
 shadowJar {
     baseName = 'transaction-generator'
     classifier = null

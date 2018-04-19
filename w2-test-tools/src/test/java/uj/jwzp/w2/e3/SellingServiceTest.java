@@ -11,7 +11,6 @@ import org.mockito.junit.MockitoRule;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-import uj.jwzp.w2.e3.external.DiscountsConfig;
 import uj.jwzp.w2.e3.external.PersistenceLayer;
 
 import java.math.BigDecimal;
