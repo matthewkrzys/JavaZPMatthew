@@ -1,8 +1,13 @@
 package model;
 
 public class Element {
-    public String name;
-    public int quantity;
-    public double price;
+    public final String name;
+    public final int quantity;
+    public final double price;
 
+    public Element(String name, int quantity, double price) {
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+    }
 }
