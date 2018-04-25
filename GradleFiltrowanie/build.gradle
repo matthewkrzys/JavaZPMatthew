@@ -1,0 +1,51 @@
+import org.apache.tools.ant.filters.*
+
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+task myTask(type: Jar) {
+    if(project.hasProperty('profile') && project.profile=='dev'){
+        processResources {
+            filter ReplaceTokens, tokens: [
+                    'db.driverClass': 'org.h2.Driver',
+                    'db.connectionURL': 'jdbc:h2:~/test',
+                    'db.username': 'admin',
+                    'db.password': 'admin1'
+            ]
+        }
+    }
+    else{
+
+    }
+    if(project.hasProperty('profile') && project.profile=='test'){
+        processResources {
+            filter ReplaceTokens, tokens: [
+                    'db.driverClass': 'org.h2.Driver',
+                    'db.connectionURL': 'jdbc:h2:~/test',
+                    'db.username': 'test',
+                    'db.password': 'test1'
+            ]
+        }
+    }
+    else {
+
+    }
+    manifest {
+        attributes 'Main-Class': 'Main'
+    }
+    baseName = 'all-in-one-jar'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
