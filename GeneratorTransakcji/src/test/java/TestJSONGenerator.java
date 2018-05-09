@@ -28,23 +28,4 @@ public class TestJSONGenerator {
         Mockito.when(jsonGenerateWapper.writeToFile()).thenReturn(true);
         Assert.assertTrue(jsonGenerateWapper.writeToFile());
     }
-
-//    @Test
-//    public void testWriteToFileNewDir(){
-//        File f=new File("/newfile");
-//        if(f.exists()){
-//            f.delete();
-//        }
-//        JSONGenerate jsonGenerate=new JSONGenerate();
-//        JSONData jsonData=new JSONData(
-//                LocalDate.now().toString(),
-//                1,
-//                new ArrayList<>(),
-//                2.0
-//        );
-//
-//        jsonGenerate.generate(jsonData,"./newfile",1);
-//        boolean fileb=new File("./newfile/jsonData1.json").exists();
-//        Assert.assertTrue(fileb);
-//    }
 }

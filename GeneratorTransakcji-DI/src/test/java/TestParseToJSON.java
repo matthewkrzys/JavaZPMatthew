@@ -1,13 +1,24 @@
 import components.ParseToJSON;
+import logic.RandomData;
 import logic.WriteFromCSV;
 import model.CommandData;
+import model.Element;
+import model.ElementFile;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 import writers.JSONGenerate;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.Mockito.*;
+
+@RunWith(MockitoJUnitRunner.class)
 public class TestParseToJSON {
     @Mock
     ParseToJSON parseToJSON;
@@ -15,9 +26,12 @@ public class TestParseToJSON {
     @Mock
     JSONGenerate jsonGenerate;
 
+    @Mock
+    WriteFromCSV writeFromCSV;
+
     @Test
     public void randomTest() {
-        Generate generate=new Generate();
+        RandomData generate=new RandomData();
         int tmp = generate.randomGenerate(7, 2);
         Assert.assertTrue(tmp != 0);
     }
@@ -33,26 +47,29 @@ public class TestParseToJSON {
         c.setItemsCount("3:12");
         c.setItemsQuantity("4:5");
         c.setItemsFile("items.csv");
-//        jsonGenerate=new writers.JSONGenerate();
-//        Mockito.when(parseToJSON.GenerateJSON(jsonGenerate,new JSONData(),"./",2)).thenReturn(Boolean.TRUE);
+
         parseToJSON.parseCommandData(c);
         Assert.assertTrue(parseToJSON.jsonData!=null);
     }
     @Test
     public void generateDateTest(){
-        Generate generate=new Generate();
+        RandomData generate=new RandomData();
         String tmp=generate.generatedata("2018-03-08T00:00:00.000-0100","2018-04-08T00:00:00.000-0100");
         Assert.assertTrue(!tmp.isEmpty());
     }
     @Test
     public void ItemFileTest(){
-        WriteFromCSV writeFromCSV=new WriteFromCSV();
+        List<Element> elementList=new ArrayList<>();
+        when(writeFromCSV.getItemFile(any(Integer.class),any(Integer.class),any(Integer.class),any(String.class)))
+                .thenReturn(elementList);
         List e=writeFromCSV.getItemFile(0,1,20,"items.csv");
         Assert.assertTrue(e.size()==0);
     }
     @Test
     public void getElementFromFileTest(){
-        WriteFromCSV writeFromCSV=new WriteFromCSV();
+        List<ElementFile> elementList= Arrays.asList(new ElementFile("Cos",2.0));
+        when(writeFromCSV.getElementFromFile(any(String.class)))
+                .thenReturn(elementList);
         List e=writeFromCSV.getElementFromFile("items.csv");
         Assert.assertTrue(e.size()>0);
     }

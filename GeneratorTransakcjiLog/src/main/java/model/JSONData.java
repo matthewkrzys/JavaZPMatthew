@@ -19,4 +19,15 @@ public class JSONData {
         this.sum = sum;
         id=++countId;
     }
+
+    @Override
+    public String toString() {
+        return "JSONData{" +
+                "id=" + id +
+                ", timestamp='" + timestamp + '\'' +
+                ", customer_id=" + customer_id +
+                ", items=" + items +
+                ", sum=" + sum +
+                '}';
+    }
 }

@@ -8,4 +8,12 @@ public class ElementFile {
         this.name = name;
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "ElementFile{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

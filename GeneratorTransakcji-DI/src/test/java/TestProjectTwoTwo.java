@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
+import java.math.BigDecimal;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -65,7 +66,7 @@ public class TestProjectTwoTwo {
                 LocalTime.now().toString(),
                 12,
                 null,
-                20.3
+                BigDecimal.valueOf(20.3)
         );
         Assert.assertTrue(j.customer_id == 12);
     }

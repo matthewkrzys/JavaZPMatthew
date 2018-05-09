@@ -1,22 +1,29 @@
 import model.CommandData;
+import model.Element;
 import model.ElementFile;
-import model.JSONData;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.Mockito.*;
+
+@RunWith(MockitoJUnitRunner.class)
 public class TestParseToJSON {
     @Mock
     ParseToJSON parseToJSON;
 
     @Mock
     JSONGenerate jsonGenerate;
+
+    @Mock
+    WriteFromCSV writeFromCSV;
 
     @Test
     public void randomTest() {
@@ -48,13 +55,17 @@ public class TestParseToJSON {
     }
     @Test
     public void ItemFileTest(){
-        WriteFromCSV writeFromCSV=new WriteFromCSV();
+        List<Element> elementList=new ArrayList<>();
+        when(writeFromCSV.getItemFile(any(Integer.class),any(Integer.class),any(Integer.class),any(String.class)))
+                .thenReturn(elementList);
         List e=writeFromCSV.getItemFile(0,1,20,"items.csv");
         Assert.assertTrue(e.size()==0);
     }
     @Test
     public void getElementFromFileTest(){
-        WriteFromCSV writeFromCSV=new WriteFromCSV();
+        List<ElementFile> elementList= Arrays.asList(new ElementFile("Cos",2.0));
+        when(writeFromCSV.getElementFromFile(any(String.class)))
+                .thenReturn(elementList);
         List e=writeFromCSV.getElementFromFile("items.csv");
         Assert.assertTrue(e.size()>0);
     }

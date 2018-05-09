@@ -71,4 +71,17 @@ public class CommandData {
     public void setOutDir(String outDir) {
         OutDir = outDir;
     }
+
+    @Override
+    public String toString() {
+        return "CommandData{" +
+                "CustomerID='" + CustomerID + '\'' +
+                ", DateRange='" + DateRange + '\'' +
+                ", ItemsFile='" + ItemsFile + '\'' +
+                ", ItemsCount='" + ItemsCount + '\'' +
+                ", ItemsQuantity='" + ItemsQuantity + '\'' +
+                ", EventsCount='" + EventsCount + '\'' +
+                ", OutDir='" + OutDir + '\'' +
+                '}';
+    }
 }

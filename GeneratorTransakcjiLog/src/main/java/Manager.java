@@ -1,12 +1,18 @@
 import model.CommandData;
 import org.apache.commons.cli.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public class Manager {
+    final static Logger logger = LoggerFactory.getLogger(Manager.class);
+    final static String TAG= Manager.class.getName();
     public CommandData getData(String[] args) throws IOException, ParseException {
         Options options;
+        logger.info(TAG+" Start create Options");
         options=createOptions();
+        logger.info(TAG+" Create Options "+options.toString());
         CommandLineParser parser = new BasicParser();
         CommandLine cmd = null;
         CommandData commandData=new CommandData();

@@ -10,4 +10,13 @@ public class Element {
         this.quantity = quantity;
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Element{" +
+                "name='" + name + '\'' +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                '}';
+    }
 }
