@@ -8,12 +8,14 @@ public class CommandData {
     private String ItemsQuantity;
     private String EventsCount;
     private String OutDir;
+    private String Format;
 
     public CommandData() {
         CustomerID="1:20";
         ItemsCount = "1:5";
         ItemsQuantity = "1:5";
         EventsCount = "100";
+        Format="xml";
     }
 
     public String getCustomerID() {
@@ -70,5 +72,27 @@ public class CommandData {
 
     public void setOutDir(String outDir) {
         OutDir = outDir;
+    }
+
+    public String getFormat() {
+        return Format;
+    }
+
+    public void setFormat(String format) {
+        Format = format;
+    }
+
+    @Override
+    public String toString() {
+        return "CommandData{" +
+                "CustomerID='" + CustomerID + '\'' +
+                ", DateRange='" + DateRange + '\'' +
+                ", ItemsFile='" + ItemsFile + '\'' +
+                ", ItemsCount='" + ItemsCount + '\'' +
+                ", ItemsQuantity='" + ItemsQuantity + '\'' +
+                ", EventsCount='" + EventsCount + '\'' +
+                ", OutDir='" + OutDir + '\'' +
+                ", Format='" + Format + '\'' +
+                '}';
     }
 }

@@ -18,6 +18,8 @@ dependencies {
     compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
     compileOnly "org.projectlombok:lombok:1.16.8"
     compile group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.13'
+    compile 'org.parancoe:parancoe-yaml:2.0.3'
+
 }
 
 shadowJar {

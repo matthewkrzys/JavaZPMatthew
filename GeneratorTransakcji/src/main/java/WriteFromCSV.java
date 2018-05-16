@@ -32,7 +32,7 @@ public class WriteFromCSV {
 
     public List<ElementFile> getElementFromFile(String itemsFile) {
         List<ElementFile> elementFileList = new ArrayList<>();
-        File file = new File(System.getProperty("user.dir")+"/src/main/resources/"+itemsFile);
+        File file = new File(itemsFile);
         Scanner in = null;
         try {
             in = new Scanner(file);

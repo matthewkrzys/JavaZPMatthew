@@ -7,8 +7,12 @@ import model.Element;
 import model.ElementFile;
 import model.JSONData;
 import org.omg.CORBA.INTERNAL;
+import writers.Generatable;
 import writers.JSONGenerate;
+import writers.XMLGenerate;
+import writers.YAMLGenerate;
 
+import java.beans.XMLDecoder;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
@@ -24,20 +28,21 @@ public class ParseToJSON {
     public JSONData jsonData;
     WriteFromCSV writeFromCSV;
     RandomData generate;
-    public ParseToJSON(){
+    Generatable generatable;
+    public ParseToJSON(Generatable generatable){
         writeFromCSV=new WriteFromCSV();
         generate=new RandomData();
+        this.generatable=generatable;
     }
 
     public void parseCommandData(CommandData commandData) {
 
         String[] tCustomerID = commandData.getCustomerID().split(":");
-        String[] tDataRange = commandData.getDateRange().split(":");
+        String[] tDataRange = commandData.getDateRange().replace("\"","").split(":");
         String[] tItemCount = commandData.getItemsCount().split(":");
         int ItemCount;
         String[] tItemQuantity = commandData.getItemsQuantity().split(":");
         commandData.getEventsCount();
-        JSONGenerate jsonGenerate = new JSONGenerate(commandData.getOutDir(), "jsonData");
         int count = Integer.parseInt(commandData.getEventsCount());
         for (int i = 1; i <= count; i++) {
             sumPrice=BigDecimal.valueOf(0);
@@ -48,13 +53,9 @@ public class ParseToJSON {
                     writeFromCSV.getItemFile(ItemCount, Integer.parseInt(tItemQuantity[1]), Integer.parseInt(tItemQuantity[0]), commandData.getItemsFile()),
                     sumPrice
             );
-            GenerateJSON(jsonGenerate,jsonData);
+            generatable.generate(jsonData);
         }
 
     }
-    public boolean GenerateJSON(JSONGenerate jsonGenerate, JSONData jsonData){
-        return jsonGenerate.generate(jsonData);
-    }
-
 
 }

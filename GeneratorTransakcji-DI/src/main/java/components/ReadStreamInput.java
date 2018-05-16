@@ -40,6 +40,8 @@ public class ReadStreamInput {
             commandData.setEventsCount(cmd.getOptionValue("eventsCount"));
         if (cmd.hasOption("outDir"))
             commandData.setOutDir(cmd.getOptionValue("outDir"));
+        if (cmd.hasOption("format"))
+            commandData.setFormat(cmd.getOptionValue("format"));
 
         return commandData;
 
@@ -53,6 +55,7 @@ public class ReadStreamInput {
         options.addOption("itemsQuantity", "itemsQuantity", true, "Zakres");
         options.addOption("eventsCount", "eventsCount", true, "Ilość transakcji");
         options.addOption("outDir", "outDir", true, "Katalog do przechowania pliku");
+        options.addOption("format", "format", true, "Format zapisu do pliku");
         return options;
     }
 }
