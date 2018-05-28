@@ -35,6 +35,6 @@ heroku-deploy:
   services:
     - docker:dind
   script:
-    - docker build --build-arg JAR_FILE=build/libs/items-0.1.0.jar --tag registry.heroku.com/csv-items-generator/web .
-    - docker login --username=areksokolowski@gmail.com --password=$HEROKU_API_KEY registry.heroku.com
+    - docker build --build-arg JAR_FILE=build/libs/generator-transakcji-0.1.0.jar --tag registry.heroku.com/csv-items-generator/web .
+    - docker login --username=matthewkrzys@gmail.com --password=$HEROKU_API_KEY registry.heroku.com
     - docker push registry.heroku.com/csv-items-generator/web
