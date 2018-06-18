@@ -24,9 +24,6 @@ public class TestParseToJSON {
     ParseToJSON parseToJSON;
 
     @Mock
-    JSONGenerate jsonGenerate;
-
-    @Mock
     WriteFromCSV writeFromCSV;
 
     @Test
@@ -37,7 +34,7 @@ public class TestParseToJSON {
     }
     @Test
     public void parseCommandDateTest(){
-        parseToJSON=new ParseToJSON();
+        parseToJSON=new ParseToJSON(new JSONGenerate("./output","jsonData"));
         CommandData c = new CommandData();
         c.setCustomerID("1:12");
         String date= "2018-03-08T00:00:00.000-0100:2018-03-08T00:00:00.000-0100";

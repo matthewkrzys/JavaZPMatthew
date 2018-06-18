@@ -29,6 +29,7 @@ public class ParseToJSON {
     WriteFromCSV writeFromCSV;
     RandomData generate;
     Generatable generatable;
+
     public ParseToJSON(Generatable generatable){
         writeFromCSV=new WriteFromCSV();
         generate=new RandomData();
