@@ -56,18 +56,18 @@ public class TestParseToJSON {
     }
     @Test
     public void ItemFileTest(){
-        List<Element> elementList=new ArrayList<>();
+        List<Element> elementList=Arrays.asList(new Element("Maslo",2,3.0),new Element("Tunczyk",3,4.0));
         when(writeFromCSV.getItemFile(any(Integer.class),any(Integer.class),any(Integer.class),any(String.class)))
                 .thenReturn(elementList);
-        List e=writeFromCSV.getItemFile(0,1,20,"items.csv");
-        Assert.assertTrue(e.size()==0);
+        List<Element> e=writeFromCSV.getItemFile(0,1,20,"items.csv");
+        Assert.assertTrue(e.get(0).name.equals("Maslo"));
     }
     @Test
     public void getElementFromFileTest(){
         List<ElementFile> elementList= Arrays.asList(new ElementFile("Cos",2.0));
         when(writeFromCSV.getElementFromFile(any(String.class)))
                 .thenReturn(elementList);
-        List e=writeFromCSV.getElementFromFile("items.csv");
-        Assert.assertTrue(e.size()>0);
+        List<ElementFile> e=writeFromCSV.getElementFromFile("items.csv");
+        Assert.assertTrue(e.get(0).name.equals("Cos"));
     }
 }
