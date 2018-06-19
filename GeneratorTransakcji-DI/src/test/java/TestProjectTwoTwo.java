@@ -35,6 +35,7 @@ public class TestProjectTwoTwo {
         c.setItemsCount("3:12");
         c.setItemsQuantity("4:5");
         c.setItemsFile("items.csv");
+        Assert.assertTrue(!c.toString().isEmpty());
         Assert.assertTrue(c.getOutDir().equals("/output"));
         Assert.assertTrue(!c.getEventsCount().equals(""));
         Assert.assertTrue(c.getItemsFile().equals("items.csv") && c.getItemsQuantity().equals("4:5") && c.getItemsCount().equals("3:12"));
@@ -48,6 +49,7 @@ public class TestProjectTwoTwo {
                 6,
                 5.0
         );
+        Assert.assertTrue(!e.toString().isEmpty());
         Assert.assertTrue(e.price == 5.0);
     }
 
@@ -68,6 +70,7 @@ public class TestProjectTwoTwo {
                 null,
                 BigDecimal.valueOf(20.3)
         );
+        Assert.assertTrue(!j.toString().isEmpty());
         Assert.assertTrue(j.customer_id == 12);
     }
 
